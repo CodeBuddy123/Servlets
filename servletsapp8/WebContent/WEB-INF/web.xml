@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+<context-param> 
+	<param-name>a</param-name>
+	<param-value>A</param-value>
+</context-param>
+<context-param> 
+	<param-name>b</param-name>
+	<param-value>B</param-value>
+</context-param>
+  <servlet>
+    <servlet-name>Servlet1</servlet-name>
+    <servlet-class>com.ashsoft.servlets.Servlet1</servlet-class>
+    <init-param>
+    	<param-name>c</param-name>
+    	<param-value>C</param-value>
+    </init-param>
+     <init-param>
+    	<param-name>d</param-name>
+    	<param-value>D</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Servlet1</servlet-name>
+    <url-pattern>/servl</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Servlet2</servlet-name>
+    <servlet-class>com.ashsoft.servlets.Servlet2</servlet-class>
+     <init-param>
+    	<param-name>e</param-name>
+    	<param-value>E</param-value>
+    </init-param>
+     <init-param>
+    	<param-name>f</param-name>
+    	<param-value>F</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Servlet2</servlet-name>
+    <url-pattern>/serv2</url-pattern>
+  </servlet-mapping>
+</web-app>
