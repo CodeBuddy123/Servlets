@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Registration Page</title>
+</head>
+<body>
+<h1 style='color:green' align='center'>Ashish Software Solutions</h1>
+<h2 style='color:blue' align='center'>Registration Form</h2>
+<form action="./register" method="POST">
+<center>
+<table border='1' bgcolor='pink'>
+<tr>
+	<td>Name</td>
+	<td><input type="text" name="sname"></td>
+</tr>
+<tr>
+	<td>Gender</td>
+	<td><input type="radio" name="sgender" value="Male">Male
+		<input type="radio" name="sgender" value="Female">Female
+	</td>
+</tr>
+<tr>
+	<td>Qualification</td>
+	<td><input type="checkbox" name="squal" value="BTECH">BTECH
+		<input type="checkbox" name="squal" value="MTECH">MTECH
+		<input type="checkbox" name="squal" value="PHD">PHD
+		<input type="checkbox" name="squal" value="MBA">MBA
+	</td>
+</tr>
+<tr>
+	<td>Branch</td>
+	<td><select name="sbranch">
+		<option value="Kukatpally">Kukatpally</option>
+		<option value="Ameerpet">Ameerpet</option>
+		<option value="Begumpet">Begumpet</option>
+	</select>
+</tr>
+<tr>
+	<td>Preferred Courses</td>
+	<td><select name="scourses" size="3" multiple="multiple">
+		<option value="C">C</option>
+		<option value="C++">C++</option>
+		<option value="Java">Java</option>
+		<option value="Python">Python</option>
+		<option value="Oracle">Oracle</option>
+	</select>
+</tr>
+<tr>
+	<td>Address</td>
+	<td><textarea rows="4" cols="30" name="saddr"></textarea>
+</tr>
+<tr>
+	<td><input type="submit" value="Register"></td>
+</tr>
+</table>
+</center>
+</form>
+</body>
+</html>
