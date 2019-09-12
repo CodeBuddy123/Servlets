@@ -1,0 +1,243 @@
+Database Queries for this application:
+---------------------------------------------------------
+create table studentinfo(SID varchar2(10) primary key,SNAME varchar2(10),SADDR varchar2(15));
+insert into studentinfo values('S-111','AAA','HYD');
+-------------------------------------------------------------------------------
+updateform.html
+------------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Update Form</title>
+</head>
+<body>
+<h1 style="color:red;" align='center'>ASHISH SOFTWARE SOLUTIONS</h1>
+<h2 style="color:blue" align='center'>Enter Student ID to Update in Database</h2>
+<form action="./edit" method="post">
+<center>
+<table>
+<tr>
+	<td>SID</td>
+	<td><input type="text" name="sid"></td>
+</tr>
+<tr>
+	<td><input type="submit" value="Get Edit Form"/>
+</tr>
+</table>
+</center>
+</form>
+</body>
+</html>
+--------------------------------------------------------------------------------------------
+EditFormServlet.java
+-----------------------------
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.ashsoft.dto.Student;
+import com.ashsoft.service.StudentService;
+
+
+
+@WebServlet("/edit")
+public class EditFormServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		PrintWriter out=response.getWriter();
+		
+		String sid=request.getParameter("sid");
+		
+		StudentService stdService= new StudentService();
+		Student std=stdService.getStudent(sid);
+		
+		if(std==null)
+		{
+			out.println("<html><body>");
+			out.println("<br><br><br>");
+			out.println("<h2 style='color:blue' align='center'>ASHISH SOFTWARE SOLUTIONS</h2>");
+			out.println("<h3 style='color:green' align='center'>Student Updation Status</h3>");
+			out.println("<h2 style='color:red' align='center'>Student not Existed</h2>");
+			out.println("<h3 align='center'><a href='./updateform.html'>|Update Form|</a></h3>");
+			out.println("</body></html>");
+			
+		}
+		else
+		{
+			out.println("<html><body>");
+			out.println("<br><br><br>");
+			out.println("<h2 style='color:blue' align='center'>ASHISH SOFTWARE SOLUTIONS</h2>");
+			out.println("<h3 style='color:green' align='center'>Student Edit Form</h3>");
+			out.println("<form action='./update' method='POST'>");
+			out.println("<center>");
+			out.println("<table>");
+			out.println("<tr><td>Student ID</td><td>"+std.getSid()+"<input type='hidden' name='sid' value='"+std.getSid()+"'/></td></tr>");//sid is unchangable.
+			out.println("<tr><td>Student Name</td><td><input type='text' name='sname'value='"+std.getSname()+"'/></td></tr>");
+			out.println("<tr><td>Student Address</td><td><input type='text' name='saddr'value='"+std.getSaddr()+"'/></td></tr>");
+			out.println("<tr><td><input type='submit' value='Update'></td></tr>");
+			out.println("</table></center></form></body></html>");
+		}
+	}
+
+}
+--------------------------------------------------------------------------------------------
+UpdateServlet.java
+----------------------------
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.ashsoft.service.StudentService;
+
+@WebServlet("/update")
+public class UpdateServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		response.setContentType("text/html");
+		PrintWriter out=response.getWriter();
+		
+		String sid=request.getParameter("sid");
+		String sname=request.getParameter("sname");
+		String saddr=request.getParameter("saddr");
+		
+		StudentService stdService=new StudentService();
+		String status=stdService.update(sid, sname, saddr);
+		
+		out.println("<html>");
+		out.println("<body>");
+		out.println("<br><br><br>");
+		out.println("<h2 style='color: red;' align='center'>Ashish Software Solutions</h2>");
+		out.println("<h3 style='color: blue;' align='center'>Student Updation Status</h3>");
+		out.println("<h1 style='color: red;' align='center'>");
+		if(status.equals("success"))
+		{
+			out.println("Student Updation Success");
+		}
+		else
+		{
+			out.println("Student Updation Failure");
+		}
+		out.println("<h3 align='center'><a href='./updateform.html'>|Update Form|</a></h3>");
+		out.println("</h1></body</html>");
+		
+	}
+
+}
+---------------------------------------------------------------------------------------------
+StudentService.java
+-----------------------------
+package com.ashsoft.service;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import com.ashsoft.dto.Student;
+
+public class StudentService {
+	String status="";
+	Connection con=null;
+	Statement st=null;
+	ResultSet rs=null;
+	
+	public StudentService() {
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","ashish");
+			st=con.createStatement();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Student getStudent(String sid)
+	{
+		Student std=null;
+		try {
+			rs=st.executeQuery("select * from studentinfo where SID='"+sid+"'");
+			boolean b=rs.next();
+			if(b==true)
+			{
+				std=new Student();             
+				std.setSid(rs.getString("SID")); //transferring data from ResultSet to Student object
+				std.setSname(rs.getString("SNAME"));
+				std.setSaddr(rs.getString("SADDR"));
+			}
+			else
+			{
+				std=null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return std;
+	}
+	public String update(String sid,String sname,String saddr)
+	{
+		String status="";
+		try {
+			int rowCount=st.executeUpdate("update studentinfo set SNAME='"+sname+"',SADDR='"+saddr+"' where SID='"+sid+"'");
+			if(rowCount==1)
+			{
+				status="success";
+			}
+			else
+			{
+				status="failure";
+			}
+		} catch (Exception e) {
+			   status="failure";
+			e.printStackTrace();
+		}
+		return status;
+	}
+}
+---------------------------------------------------------------------------------------------
+Student.java
+-------------------
+package com.ashsoft.dto;
+
+public class Student {
+	private String sid;
+	private String sname;
+	private String saddr;
+	public String getSid() {
+		return sid;
+	}
+	public void setSid(String sid) {
+		this.sid = sid;
+	}
+	public String getSname() {
+		return sname;
+	}
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
+	public String getSaddr() {
+		return saddr;
+	}
+	public void setSaddr(String saddr) {
+		this.saddr = saddr;
+	}
+	
+}
+
