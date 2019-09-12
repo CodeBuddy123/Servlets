@@ -1,0 +1,304 @@
+//Static Form to Store registration details in database and retrieve for login
+home.html
+------------------------
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Home</title>
+</head>
+<frameset rows="20% 65% 15%">
+<frame src="header.html"/>
+<frameset cols="25% 75%">
+<frame src="menu.html"/>
+<frame src="welcome.html" name="body"/>
+</frameset>
+<frame src="footer.html"/>  
+</frameset>
+</html>
+------------------------------------------------------
+header.html
+------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Header</title>
+</head>
+<body bgcolor="maroon">
+<h1 style='color:lightblue' align='center'>
+ASHISH SOFTWARE SOLUTIONS
+</h1>
+</body>
+</html>
+------------------------------------------
+menu.html
+-----------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>menu</title>
+</head>
+<body bgcolor='lightyellow'>	
+<br><br>
+<h3 align='center'>
+<a href='./loginform.html' target='body'>Login</a><br><br>
+<a href='./registrationform.html' target='body'>Registration</a>
+</h3>
+</body>
+</html>
+-------------------------------------------------------
+welcome.html
+---------------------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Welcome</title>
+</head>
+<body bgcolor='lightblue'>
+<br><br><br>
+<h2 style='color:red' align='center'>
+<marquee>Welcome to Ashish Software Solutions</marquee>
+</h2>
+</body>
+</html>
+---------------------------------------------------------
+footer.html
+-------------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>footer</title>
+</head>
+<body bgcolor='cyan'>
+<br>
+<h3 style='color:red' align='center'>
+2-2-1166/3, Tilak Nagar,New Nallakunta,Hyderabad-500044
+</h3>
+</body>
+</html>
+----------------------------------------------------------
+loginform.html
+---------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Login form</title>
+</head>
+<body bgcolor='pink'>
+<h3 style='color:blue' align='center'>User Login Page</h3>
+<form method='post'action='./login'>
+<center>
+<table>
+	<tr>
+		<td>UserName</td>
+		<td><input type='text' name='uname'/></td>
+	</tr>
+	<tr>
+		<td>Password</td>
+		<td><input type='password' name='upwd'/></td>
+	</tr>
+	<tr>
+		<td><input type='submit' value='Login'/></td>
+	</tr>
+</table>
+</center>
+</form>
+</body>
+</html>
+-------------------------------------------------------------------
+registrationform.html
+-----------------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Registration Form</title>
+</head>
+<body bgcolor='lightyellow'>
+<h3 style='color:maroon' align='center'>
+Registration Signup Page
+</h3>
+<form method='post' action='./reg'> 
+<center>
+<table>
+	<tr>
+	<td>Username</td>
+	<td><input type='text' name='uname'/></td>
+	</tr>
+	<tr>
+	<td>Password</td>
+	<td><input type='password' name='upwd'/></td>
+	</tr>
+	<tr>
+	<td>Email</td>
+	<td><input type='text' name='uemail'/></td>
+	</tr>
+	<tr>
+	<td>Mobile</td>
+	<td><input type='text' name='umobile'/></td>
+	</tr>
+	<tr>
+	<td><input type='submit'value='Register'/></td>
+	</tr>
+</table>
+</center>
+</form>
+</body>
+</html>
+--------------------------------------------------------------------------------
+LoginServlet.java
+------------------------
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.durgasoft.service.UserService;
+
+@WebServlet("/login")
+public class LoginServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    response.setContentType("text/html");
+	    PrintWriter out=response.getWriter();
+	    String uname=request.getParameter("uname");
+	    String upwd=request.getParameter("upwd");
+	    
+	    UserService userService=new UserService();
+	    String status=userService.login(uname,upwd);
+	    out.println("<html>");
+	    out.println("<body bgcolor='lightblue'>");
+	    out.println("<br><br><br>");
+	    out.println("<h1 style='color: red;' align='center'>");
+	    if(status.equals("success")) {
+	    out.println("User Login Success");
+	    }else {
+	    out.println("User Login Failure");
+	    }
+	    out.println("</h1></body></html>");    
+	}
+}
+--------------------------------------------------------------------------------
+ RegistrationServlet.java
+--------------------------
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.durgasoft.service.UserService;
+@WebServlet("/reg")
+public class RegistrationServlet extends HttpServlet {
+private static final long serialVersionUID = 1L;
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+response.setContentType("text/html");
+PrintWriter out = response.getWriter();
+
+String uname = request.getParameter("uname");
+String upwd = request.getParameter("upwd");
+String uemail = request.getParameter("uemail");
+String umobile = request.getParameter("umobile");
+
+UserService userService = new UserService();
+String status = userService.registration(uname, upwd, uemail, umobile);
+
+out.println("<html>");
+out.println("<body bgcolor='lightblue'>");
+out.println("<br><br><br>");
+out.println("<h1 style='color: red;' align='center'>");
+if(status.equals("success")) {
+out.println("User Registration Success");
+}
+if(status.equals("failure")) {
+out.println("User Registration Failure");
+}
+if(status.equals("existed")) {
+out.println("User Existed Already");
+}
+
+out.println("</h1></body></html>");
+}
+}
+
+UserService.java
+----------------
+package com.ashsoft.service;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class UserService {
+String status = "";
+
+Connection con;
+Statement st;
+ResultSet rs;
+
+public UserService() {
+try {
+
+Class.forName("oracle.jdbc.OracleDriver");
+con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "durga");
+st = con.createStatement();
+
+} catch (Exception e) {
+e.printStackTrace();
+}
+}
+public String login(String uname, String upwd) {
+try {
+rs = st.executeQuery("select * from reg_Users where UNAME = '"+uname+"' and UPWD = '"+upwd+"'");
+boolean b = rs.next();
+if(b == true) {
+status = "success";
+}else {
+status = "failure";
+}
+} catch (Exception e) {
+e.printStackTrace();
+}
+return status;
+}
+public String registration(String uname, String upwd, String uemail, String umobile) {
+try {
+rs = st.executeQuery("select * from reg_Users where UNAME = '"+uname+"'");
+boolean b = rs.next();
+if(b == true) {
+status = "existed";
+}else {
+int rowCount = st.executeUpdate("insert into reg_users values('"+uname+"','"+upwd+"','"+uemail+"','"+umobile+"')");
+if(rowCount == 1) {
+status = "success";
+}else {
+status = "failure";
+}
+}
+} catch (Exception e) {
+status = "failure";
+e.printStackTrace();
+}
+return status;
+}
+}
+==========================
+create table reg_Users(UNAME varchar2(30) primary key, UPWD varchar2(15),UEMAIL varchar2(35), UMOBILE varchar2(12));
