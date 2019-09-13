@@ -1,0 +1,61 @@
+create modules transactions,accounts,loans under WebContent folder in Eclipse IDE, and then the respective html files
+
+web.xml[welcome files are configured in this]
+-------------------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>servletsapp17</display-name>
+  <welcome-file-list>
+    <welcome-file>tx_menu.html</welcome-file>
+    <welcome-file>menu.html</welcome-file>
+    <welcome-file>acc_menu.html</welcome-file>
+    <welcome-file>loan_menu.html</welcome-file>
+  </welcome-file-list>
+</web-app>
+-------------------------------------------------------------------------------------------
+acc_menu.html
+---------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h2 style="color:maroon" align="center">
+Response is from acc_menu.html of accounts module
+</h2>
+</body>
+</html>
+--------------------------------------------------------------------------------------------
+tx_menu.html
+----------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Transactions</title>
+</head>
+<body>
+<h2 style="color:red" align="center">
+Response is from tx_menu.html of transactions module
+</h2>
+</body>
+</html>
+---------------------------------------------------------------------------------------------
+loan_menu.html
+------------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Loans module</title>
+</head>
+<body>
+<h2 style="color:green" align="center">
+Response is from loan_menu.html of loans module
+</h2>
+</body>
+</html>
+--------------------------------------------------------------------------------------------
+
