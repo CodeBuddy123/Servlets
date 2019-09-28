@@ -1,0 +1,179 @@
+Adding records to database using addform and display the added records in a table as output.addform included in output
+addform.html
+------------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>AddForm</title>
+</head>
+<body>
+<h1 style="color:red;"align="center">
+Ashish Software Solutions
+</h1>
+<h2 style="color:blue;"align="center">
+Student Add Form
+</h2>
+<form action="./add" method="get">
+<center>
+<table>
+<tr>
+	<td>Student Id</td>
+	<td><input type="text" name="sid"/>
+</tr>
+<tr>
+	<td>Student Name</td>
+	<td><input type="text" name="sname"/>
+</tr>
+<tr>
+	<td>Student Address</td>
+	<td><input type="text" name="saddr"/>
+</tr>
+<tr>
+	<td><input type="submit" value="Add"/>
+</tr>
+</table>
+</center>
+</form>
+</body>
+</html>
+--------------------------------------------------------------------------------------
+Student.java
+----------------------------------------------------
+package com.ashsoft.dto;
+
+public class Student {
+	private String sid;
+	private String sname;
+	private String saddr;
+	public String getSid() {
+		return sid;
+	}
+	public void setSid(String sid) {
+		this.sid = sid;
+	}
+	public String getSname() {
+		return sname;
+	}
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
+	public String getSaddr() {
+		return saddr;
+	}
+	public void setSaddr(String saddr) {
+		this.saddr = saddr;
+	}
+}
+----------------------------------------------------------------------
+AddServlet.java
+-------------------------------------------
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.durgasoft.dto.Student;
+import com.durgasoft.services.StudentService;
+
+@WebServlet("/add")
+public class AddServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	   response.setContentType("text/html");
+	   PrintWriter out=response.getWriter();
+	   
+	   String sid=request.getParameter("sid");
+	   String sname=request.getParameter("sname"); //getting request parameters
+	   String saddr=request.getParameter("saddr");
+	   
+	   StudentService stdService=new StudentService(); 
+	   stdService.addStudent(sid, sname, saddr);//sending values to service class
+	   List<Student> stdList=stdService.getStudents(); //getting Student bean objects into list
+	   
+	   out.println("<html><body>");
+	   out.println("<h3 style='color:green'align='center'>Student Details</h3>");
+	   out.println("<center>");
+	   out.println("<table border='1'>");
+	   out.println("<tr><th>SID</th><th>SNAME</th><th>SADDR</th></tr>");
+	   for(Student std:stdList) //going through each Student object 
+	   {
+		   out.println("<tr>");
+		   out.println("<td>"+std.getSid()+"</td>");  //displaying each student record in table form
+		   out.println("<td>"+std.getSname()+"</td>");
+		   out.println("<td>"+std.getSaddr()+"</td>");
+		   out.println("</tr>");
+	   }
+	   out.println("</table></center></body></html>");
+	   
+	   RequestDispatcher requestDispatcher=request.getRequestDispatcher("addform.html");
+	   requestDispatcher.include(request, response); //Including addform.html resource response in the current servlet
+	}
+}
+------------------------------------------------------------------------
+StudentService.java
+--------------------------------------------------
+package com.ashsoft.services;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.durgasoft.dto.Student;
+
+public class StudentService {
+	Connection con=null;
+	Statement st=null;
+	ResultSet rs=null;
+	public StudentService()
+	{
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","ashish");
+			st=con.createStatement();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	public void addStudent(String sid,String sname,String saddr)
+	{
+		try {
+			st.executeUpdate("insert into student values('"+sid+"','"+sname+"','"+saddr+"')");	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+  public List<Student> getStudents()
+  {
+	  List<Student> stdList=new ArrayList<Student>(); //creating list object
+	  try {
+		 rs=st.executeQuery("select * from student");
+		 while(rs.next()) //going through each row in database
+		 {
+			 Student std=new Student();
+			 std.setSid(rs.getString(1)); //getting values from resultset and storing in student bean object
+			 std.setSname(rs.getString(2));
+			 std.setSaddr(rs.getString(3));
+			 stdList.add(std); //adding student bean objects to list object
+		 }		
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	  return stdList;  //returning list object to service layer
+  }
+}
+-----------------------------------------------------------------------------
