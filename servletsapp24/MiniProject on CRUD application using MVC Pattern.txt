@@ -1,0 +1,821 @@
+home.html
+----------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>HomePage</title>
+</head>
+<frameset rows="20%,65%,25%">
+    <frame src="header.html"/>
+    <frameset cols="20%,80%">
+    	<frame src="menu.html"/>
+    	<frame src="welcome.html" name="body">
+    </frameset>
+   	<frame src="footer.html"/>
+</frameset>
+</html>
+----------------------------------------------------------------------------------------------------------
+header.html
+------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body bgcolor='maroon'>
+<br><br>
+<center>
+<font size='7' color='white'>
+<b>ASHISH SOFTWARE SOLUTIONS</b>
+</font>
+</center>
+</body>
+</html>
+----------------------------------------------------------------------------------------------------------
+menu.html
+-----------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body bgcolor='lightyellow'>
+<br><br>
+<h3 align='center'>
+<a href="./addform.do" target="body">Add</a><br><br>
+<a href="./searchform.do" target="body">Search</a><br><br>
+<a href="./updateform.do" target="body">Update</a><br><br>
+<a href="./deleteform.do" target="body">Delete</a><br><br>
+</h3>
+</body>
+</html>
+---------------------------------------------------------------------------------------------------------
+welcome.html
+----------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body bgcolor='lightblue'>
+<br><br><br><br><br>
+<center>
+<marquee>
+<h1 style='color:blue'>Welcome to Ashish Software Solutions</h1>
+</marquee>
+</center>
+</body>
+</html>
+--------------------------------------------------------------------------------------------------------
+footer.html
+----------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body bgcolor='green'>
+<h2 style='color:yellow' align='center'>
+303,Diamond Square, San Jose,California,456755
+</h2>
+</body>
+</html>
+-----------------------------------------------------------------------------------------------------------
+success.html
+------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body bgcolor='lightblue'>
+<br><br><br>
+<h1 style='color:green' align='center'>
+SUCCESS
+</h1>
+</body>
+</html>
+---------------------------------------------------------------------------------------------------------
+failure.html
+-----------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body bgcolor='lightblue'>
+<br><br><br>
+<h1 style='color:red' align='center'>
+FAILURE
+</h1>
+</body>
+</html>
+-------------------------------------------------------------------------------------------------------
+existed.html
+------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body bgcolor='lightblue'>
+<br><br><br>
+<h1 style='color:teal' align='center'>
+Student Existed Already
+</h1>
+</body>
+</html>
+--------------------------------------------------------------------------------------------------------
+notexisted.html
+-----------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body bgcolor='lightblue'>
+<br><br><br>
+<h1 style='color:teal;'align='center'>
+Student Not Existed
+</h1>
+</body>
+</html>
+---------------------------------------------------------------------------------------------------------
+addform.html
+---------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body bgcolor='lightblue'>
+<br><br><br>
+<h2 style='color:blue' align='center'>Student Add Page</h2>
+<form action="add.do" method="post">
+<center>
+<table>
+<tr>
+	<td>Student ID</td>
+	<td><input type="text" name="sid"></td>
+</tr>
+<tr>
+	<td>Student Name</td>
+	<td><input type="text" name="sname"></td>
+</tr>
+<tr>
+	<td>Student Address</td>
+	<td><input type="text" name="saddr"></td>
+</tr>
+<tr>
+	<td><input type="submit" value="ADD"></td>
+</tr>
+</table>
+</center>
+</form>
+</body>
+</html>
+------------------------------------------------------------------------------------------------------------
+searchform.html
+-------------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body bgcolor='lightblue'>
+<br><br><br>
+<h2 style='color:blue' align='center'>Student Search Page</h2>
+<form action="search.do" method="post">
+<center>
+<table>
+<tr>
+	<td>Student ID</td>
+	<td><input type="text" name="sid"></td>
+</tr>
+<tr>
+	<td><input type="submit" value="SEARCH"></td>
+</tr>
+</table>
+</center>
+</form>
+</body>
+</html>
+----------------------------------------------------------------------------------------------------------
+updateform.html
+--------------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body bgcolor='lightblue'>
+<br><br><br>
+<h2 style='color:blue' align='center'>Student Update Page</h2>
+<form action="editform.do" method="post">
+<center>
+<table>
+<tr>
+	<td>Student ID</td>
+	<td><input type="text" name="sid"></td>
+</tr>
+<tr>
+	<td><input type="submit" value="Get EditForm"></td>
+</tr>
+</table>
+</center>
+</form>
+</body>
+</html>
+------------------------------------------------------------------------------------------------------------
+deleteform.html
+------------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body bgcolor='lightblue'>
+<br><br><br>
+<h2 style='color:blue' align='center'>Student Delete Page</h2>
+<form action="delete.do" method="post">
+<center>
+<table>
+<tr>
+	<td>Student ID</td>
+	<td><input type="text" name="sid"></td>
+</tr>
+<tr>
+	<td><input type="submit" value="DELETE"></td>
+</tr>
+</table>
+</center>
+</form>
+</body>
+</html>
+----------------------------------------------------------------------------------------------------------
+ControllerServlet.java
+--------------------------------
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.ashsoft.dto.Student;
+import com.ashsoft.factory.ConnectionFactory;
+import com.ashsoft.factory.StudentDaoFactory;
+import com.ashsoft.factory.StudentServiceFactory;
+import com.ashsoft.service.StudentService;
+
+public class ControllerServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+	@Override
+	public void init() throws ServletException {     //This Method is executed during Server Startup during ControllerServlet lifecycle
+		ConnectionFactory.getConnection();
+		StudentServiceFactory.getStudentService();   //Creating Object at this phase increases Application Performance
+		StudentDaoFactory.getStudentDao();
+		System.out.println("*******Connection Object Created*******");
+		System.out.println("*******StudentService Object Created*******"); 
+		System.out.println("*******StudentDao Object Created*******");
+	}
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doProcess(request,response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doProcess(request, response);
+	}
+    protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String request_URI=request.getRequestURI();
+		
+		if(request_URI.endsWith("home.do"))
+		{
+			RequestDispatcher requestDispatcher=request.getRequestDispatcher("home.html");
+			requestDispatcher.forward(request, response);
+		}
+		
+		if(request_URI.endsWith("addform.do"))
+		{
+			RequestDispatcher requestDispatcher=request.getRequestDispatcher("addform.html");
+			requestDispatcher.forward(request, response);
+		}
+		if(request_URI.endsWith("deleteform.do"))
+		{
+			RequestDispatcher requestDispatcher=request.getRequestDispatcher("deleteform.html");
+			requestDispatcher.forward(request, response);
+		}
+		if(request_URI.endsWith("searchform.do"))
+		{
+			RequestDispatcher requestDispatcher=request.getRequestDispatcher("searchform.html");
+			requestDispatcher.forward(request, response);
+		}
+		if(request_URI.endsWith("updateform.do"))
+		{
+			RequestDispatcher requestDispatcher=request.getRequestDispatcher("updateform.html");
+			requestDispatcher.forward(request, response);
+		}
+		//***************ADD MODULE**********
+		if(request_URI.endsWith("add.do"))
+		{
+			String sid=request.getParameter("sid");
+			String sname=request.getParameter("sname");
+			String saddr=request.getParameter("saddr");
+			
+			StudentService stdService=StudentServiceFactory.getStudentService();
+			String status=stdService.addStudent(sid, sname, saddr);
+			RequestDispatcher requestDispatcher=null;
+			if(status.equals("success"))
+			{
+				requestDispatcher=request.getRequestDispatcher("success.html");
+				requestDispatcher.forward(request, response);
+			}
+			if(status.equals("failure"))
+			{
+				requestDispatcher=request.getRequestDispatcher("failure.html");
+				requestDispatcher.forward(request, response);
+			}
+			if(status.equals("existed"))
+			{
+				requestDispatcher=request.getRequestDispatcher("existed.html");
+				requestDispatcher.forward(request, response);
+			}
+				   
+		}
+		//***************DELETE MODULE**********
+	   if(request_URI.endsWith("delete.do"))
+	   {
+		   String sid=request.getParameter("sid");
+		   
+		   StudentService stdService=StudentServiceFactory.getStudentService();
+		   String status=stdService.deleteStudent(sid);
+		   
+		   RequestDispatcher requestDispatcher=null;
+		   if(status.equals("success"))
+		   {
+			   requestDispatcher=request.getRequestDispatcher("success.html");
+			   requestDispatcher.forward(request, response);
+		   }
+		   if(status.equals("failure"))
+		   {
+			   requestDispatcher=request.getRequestDispatcher("failure.html");
+			   requestDispatcher.forward(request, response);
+		   }
+		   if(status.equals("not existed"))
+		   {
+			   requestDispatcher=request.getRequestDispatcher("notexisted.html");
+			   requestDispatcher.forward(request, response);
+		   }
+	   }
+	
+	//***************SEARCH MODULE**********
+	   if(request_URI.endsWith("search.do"))
+	   {
+		   String sid=request.getParameter("sid");
+		   
+		   StudentService stdService=StudentServiceFactory.getStudentService();
+		   Student std=stdService.searchStudent(sid);
+		   
+		   RequestDispatcher requestDispatcher=null;
+		   if(std==null)
+		   {
+			   requestDispatcher=request.getRequestDispatcher("notexisted.html");
+			   requestDispatcher.forward(request, response);
+		   }
+		   else
+		   {
+			   response.setContentType("text/html");
+			   PrintWriter out=response.getWriter();
+			   out.println("<html>");
+			   out.println("<body bgcolor='lightblue'");
+			   out.println("<br><br><br>");
+			   out.println("<h2 style='color:blue' align='center'>Student Details</h2>");
+			   out.println("<center>");
+			   out.println("<table border='1'>");
+			   out.println("<tr><th>Student ID</th><td>"+std.getSid()+"</td></tr>");
+			   out.println("<tr><th>Student Name</th><td>"+std.getSname()+"</td></tr>");
+			   out.println("<tr><th>Student Address</th><td>"+std.getSaddr()+"</td></tr>");
+			   out.println("</table></center></body></html>");
+		   }
+	   }
+	   //***************UPDATE MODULE**********
+	   if(request_URI.endsWith("editform.do"))
+	   {
+		   String sid=request.getParameter("sid");
+		   
+		  StudentService stdService=StudentServiceFactory.getStudentService();
+		  Student std=stdService.getStudent(sid);
+		  
+		  RequestDispatcher requestDispatcher=null;
+		  if(std==null)
+		  {
+			  requestDispatcher=request.getRequestDispatcher("notexisted.html");
+			  requestDispatcher.forward(request, response);
+		  }
+		  else
+		  {
+			  response.setContentType("text/html");
+			  PrintWriter out=response.getWriter();
+			  out.println("<html><body bgcolor='lightblue'>");
+			  out.println("<br><br><br>");
+			  out.println("<h2 style='color:blue' align='center'>Student EditForm</h2>");
+			  out.println("<form action='update.do' method='post'>");
+			  out.println("<center>");
+			  out.println("<table>");
+			  out.println("<tr><td>Student ID</td><td>"+std.getSid()+"</td></tr>");
+			  out.println("<tr><td><input type='hidden' name='sid' value='"+std.getSid()+"'/></td></tr>");
+			  out.println("<tr><td>Student Name</td><td><input type='text' name='sname' value='"+std.getSname()+"'/>");
+			  out.println("<tr><td>Student Address</td><td><input type='text' name='saddr' value='"+std.getSaddr()+"'/>");
+			  out.println("<tr><td><input type='submit' value='UPDATE'></td></tr>");
+			  out.println("</table></center></form</body></html>");
+			  
+		  }
+	   }
+	   if(request_URI.endsWith("update.do"))
+	   {
+		String sid=request.getParameter("sid");
+		String sname=request.getParameter("sname");
+		String saddr=request.getParameter("saddr");
+		
+		StudentService stdService=StudentServiceFactory.getStudentService();
+		String status=stdService.updateStudent(sid, sname, saddr);
+		
+		RequestDispatcher requestDispatcher=null;
+		if(status.equals("success"))
+		{
+			requestDispatcher=request.getRequestDispatcher("success.html");
+			requestDispatcher.forward(request, response);
+		}
+		if(status.equals("failure"))
+		{
+			requestDispatcher=request.getRequestDispatcher("failure.html");
+			requestDispatcher.forward(request, response);
+		}
+	   }
+	}
+    @Override
+    public void destroy() { //method is executed during ControllerServlet Deinstantiation
+    	ConnectionFactory.cleanUp(); //Connection Object is destroyed
+    	System.out.println("****Connection Object Destroyed****");
+    }
+}
+--------------------------------------------------------------------------------------------------------
+StudentService.java
+-----------------------------
+package com.ashsoft.service;
+
+import com.ashsoft.dto.Student;
+
+public interface StudentService {
+	public String addStudent(String sid,String sname,String saddr);
+	public Student searchStudent(String sid);
+	public Student getStudent(String sid);
+	public String updateStudent(String sid,String sname,String saddr);
+	public String deleteStudent(String sid);
+}
+--------------------------------------------------------------------------------------------------------
+StudentServiceImpl.java
+------------------------------------
+package com.ashsoft.service;
+
+import com.ashsoft.dao.StudentDao;
+import com.ashsoft.dto.Student;
+import com.ashsoft.factory.StudentDaoFactory;
+
+public class StudentServiceImpl implements StudentService {
+
+	@Override
+	public String addStudent(String sid, String sname, String saddr) {
+		StudentDao stdDao=StudentDaoFactory.getStudentDao();
+		String status=stdDao.add(sid, sname, saddr);
+		return status;
+	}
+
+	@Override
+	public Student searchStudent(String sid) {
+		StudentDao stdDao=StudentDaoFactory.getStudentDao();
+		Student std=stdDao.search(sid);
+		return std;
+	}
+
+	@Override
+	public Student getStudent(String sid) {
+		StudentDao stdDao=StudentDaoFactory.getStudentDao();
+		Student std=stdDao.search(sid);
+		return std;
+	}
+
+	@Override
+	public String updateStudent(String sid, String sname, String saddr) {
+		StudentDao stdDao=StudentDaoFactory.getStudentDao();
+		String status=stdDao.update(sid, sname, saddr);
+		return status;
+	}
+
+	@Override
+	public String deleteStudent(String sid) {
+		StudentDao stdDao=StudentDaoFactory.getStudentDao();
+		String status=stdDao.delete(sid);
+		return status;
+	}
+
+}
+-----------------------------------------------------------------------------------------------------------
+StudentDao.java
+--------------------------
+package com.ashsoft.dao;
+
+import com.ashsoft.dto.Student;
+
+public interface StudentDao {
+	public String add(String sid,String sname,String saddr);
+	public Student search(String sid);
+	public String update(String sid,String sname,String saddr);
+	public String delete(String sid);
+}
+----------------------------------------------------------------------------------------------------------
+StudentDaoImpl.java
+-------------------------------
+package com.ashsoft.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import com.ashsoft.dto.Student;
+import com.ashsoft.factory.ConnectionFactory;
+
+public class StudentDaoImpl implements StudentDao {
+
+	@Override
+	public String add(String sid, String sname, String saddr) {
+		String status="";
+		try {
+			Connection con=ConnectionFactory.getConnection();
+			PreparedStatement pst=con.prepareStatement("select * from students where SID = ?");
+			pst.setString(1,sid);
+			ResultSet rs=pst.executeQuery();
+			boolean b=rs.next();
+			if(b==true)
+			{
+				status="existed";
+			}
+			else
+			{
+				pst=con.prepareStatement("insert into students values(?,?,?)");
+				pst.setString(1,sid);
+				pst.setString(2,sname);
+				pst.setString(3, saddr);
+				int rowCount=pst.executeUpdate();
+				if(rowCount==1)
+				{
+					status="success";
+				}
+				else
+				{
+					status="failure";
+				}
+			}
+		} catch (Exception e) {
+			status="failure";
+			e.printStackTrace();
+		}
+		return status;
+	}
+
+	@Override
+	public Student search(String sid) {
+		Student std=null;
+		try {
+			Connection con=ConnectionFactory.getConnection();
+			PreparedStatement pst=con.prepareStatement("select * from students where SID = ?");
+			pst.setString(1,sid);
+			ResultSet rs=pst.executeQuery();
+			boolean b=rs.next();
+			if(b==true)
+			{
+				std=new Student();
+				std.setSid(rs.getString("SID"));
+				std.setSname(rs.getString("SNAME"));
+				std.setSaddr(rs.getString("SADDR"));
+			}
+			else
+			{
+				std=null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return std;
+	}
+
+	@Override
+	public String update(String sid, String sname, String saddr) {
+		String status="";
+		try {
+			Connection con=ConnectionFactory.getConnection();
+			PreparedStatement pst=con.prepareStatement("update students set SNAME = ?, SADDR = ? where SID = ?");
+			pst.setString(3, sid);
+			pst.setString(1,sname);
+			pst.setString(2,saddr);
+			
+			int rowCount=pst.executeUpdate();
+			if(rowCount==1)
+			{
+				status="success";
+			}
+			else
+			{
+				status="failure";
+			}
+		} catch (Exception e) {
+			status="failure";
+			e.printStackTrace();
+		}
+		return status;
+	}
+
+	@Override
+	public String delete(String sid) {
+		String status="";
+		try {
+			Connection con=ConnectionFactory.getConnection();
+			PreparedStatement pst=con.prepareStatement("select * from students where SID = ?");
+			pst.setString(1, sid);
+			ResultSet rs=pst.executeQuery();
+			boolean b=rs.next();
+			if(b==true)
+			{
+				pst=con.prepareStatement("delete from students where SID = ?");
+				pst.setString(1, sid);
+				int rowCount=pst.executeUpdate();
+				if(rowCount==1)
+				{
+					status="success";
+				}
+				else
+				{
+					status="failure";
+				}
+			}
+			else
+			{
+				status="not existed";
+			}
+		} catch (Exception e) {
+			status="failure";
+			e.printStackTrace();
+		}
+		return status;
+	}
+}
+-----------------------------------------------------------------------------------------------------------
+StudentServiceFactory.java
+----------------------------------------
+package com.ashsoft.factory;
+
+import com.ashsoft.service.StudentService;
+import com.ashsoft.service.StudentServiceImpl;
+
+public class StudentServiceFactory {
+	private static StudentService stdService;
+	static
+	{
+		stdService=new StudentServiceImpl();
+	}
+	public static StudentService getStudentService()
+	{
+		return stdService;
+	}
+}
+---------------------------------------------------------------------------------------------------------
+StudentDaoFactory.java
+----------------------------------
+package com.ashsoft.factory;
+
+import com.ashsoft.dao.StudentDao;
+import com.ashsoft.dao.StudentDaoImpl;
+
+public class StudentDaoFactory {
+	private static StudentDao stdDao;
+	static
+	{
+		stdDao=new StudentDaoImpl();
+	}
+	public static StudentDao getStudentDao()
+	{
+		return stdDao;
+	}
+}
+----------------------------------------------------------------------------------------------------------
+ConnectionFactory.java
+----------------------------------
+package com.ashsoft.factory;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class ConnectionFactory {
+	private static Connection connection;
+	static
+	{
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			connection=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","ashish");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public static Connection getConnection()
+	{
+		return connection;
+	}
+	public static void cleanUp()
+	{
+		try {
+			connection.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+---------------------------------------------------------------------------------------------------------
+web.xml
+-------------
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>servletsapp24</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <servlet-name>controllerServlet</servlet-name>
+    <servlet-class>com.ashsoft.servlets.ControllerServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>controllerServlet</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+</web-app>
+---------------------------------------------------------------------------------------------------------
+index.jsp
+------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<jsp:forward page="home.do"/>
+</body>
+</html>
+----------------------------------------------------------------------------------------------------------
+Student.java
+-------------------
+package com.ashsoft.dto;
+
+public class Student {
+	private String sid;
+	private String sname;
+	private String saddr;
+	public String getSid() {
+		return sid;
+	}
+	public void setSid(String sid) {
+		this.sid = sid;
+	}
+	public String getSname() {
+		return sname;
+	}
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
+	public String getSaddr() {
+		return saddr;
+	}
+	public void setSaddr(String saddr) {
+		this.saddr = saddr;
+	}
+}
