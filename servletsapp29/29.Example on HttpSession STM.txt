@@ -1,0 +1,198 @@
+form1.html
+--------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Registration Page</title>
+</head>
+<body>
+<h2 style="color:red;" align="center">Ashish Software Solutions</h2>
+<h2 style="color:blue;" align="center">Registration Form</h2>
+<form action="./first" method="POST">
+<center>
+<table>
+<tr>
+	<td>Username</td>
+	<td><input type="text"name="uname"></td>
+</tr>
+<tr>
+	<td>Password</td>
+	<td><input type="password" name="upwd"></td>
+</tr>
+<tr>	
+	<td><input type="submit" value="Next"/>
+</tr>
+</table>
+</center>
+</form>
+</body>
+</html>
+--------------------------------------------------------------------------------
+form2.html
+------------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Registration Page</title>
+</head>
+<body>
+<h2 style="color:red;" align="center">Ashish Software Solutions</h2>
+<h2 style="color:blue;" align="center">Registration Form</h2>
+<form action="./second" method="POST">
+<center>
+<table>
+<tr>
+	<td>Qualification</td>
+	<td><input type="text" name="uqual"></td>
+</tr>
+<tr>
+	<td>Designation</td>
+	<td><input type="text" name="udes"></td>
+</tr>
+<tr>	
+	<td><input type="submit" value="Next"/>
+</tr>
+</table>
+</center>
+</form>
+</body>
+</html>
+---------------------------------------------------------------------------------------------
+form3.html
+-----------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Registration Page</title>
+</head>
+<body>
+<h2 style="color:red;" align="center">Ashish Software Solutions</h2>
+<h2 style="color:blue;" align="center">Registration Form</h2>
+<form action="./display" method="POST">
+<center>
+<table>
+<tr>
+	<td>Email</td>
+	<td><input type="text" name="uemail"></td>
+</tr>
+<tr>
+	<td>Mobile</td>
+	<td><input type="text" name="umobile"></td>
+</tr>
+<tr>	
+	<td><input type="submit" value="Display"/>
+</tr>
+</table>
+</center>
+</form>
+</body>
+</html>
+-------------------------------------------------------------------------------------
+FirstServlet.java
+-----------------------
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet("/first")
+public class FirstServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String uname=request.getParameter("uname");
+		String upwd=request.getParameter("upwd");
+		
+		HttpSession hs=request.getSession();  //creates http session object
+		hs.setAttribute("uname",uname);
+		hs.setAttribute("upwd",upwd);    //storing the data into session object
+		
+		RequestDispatcher requestDispatcher=request.getRequestDispatcher("form2.html");
+		requestDispatcher.forward(request, response);   ///forwards request to form2.html
+	}
+
+}
+-----------------------------------------------------------------------------------------------
+SecondServlet.java
+------------------------------
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet("/second")
+public class SecondServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String uqual=request.getParameter("uqual");
+		String udes=request.getParameter("udes");
+		
+		HttpSession hs=request.getSession();  //creates http session object
+		hs.setAttribute("uqual",uqual);
+		hs.setAttribute("udes",udes);    //storing the data into session object
+		
+		RequestDispatcher requestDispatcher=request.getRequestDispatcher("form3.html");
+		requestDispatcher.forward(request, response);   ///forwards request to form3.html
+	}
+
+}
+-------------------------------------------------------------------------------------
+DisplayServlet.java
+-------------------------------
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet("/display")
+public class DisplayServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String uemail=request.getParameter("uemail");
+		String umobile=request.getParameter("umobile");     //getting data from form3[present request data]
+		
+		HttpSession hs=request.getSession();
+		String uname=(String) hs.getAttribute("uname");
+		String upwd=(String) hs.getAttribute("upwd");             //getting past request data from session object
+		String uqual=(String) hs.getAttribute("uqual");
+		String udes=(String) hs.getAttribute("udes");
+		
+		response.setContentType("text/html");
+		PrintWriter out=response.getWriter();
+		out.println("<html><body>");
+		out.println("<h1 style='color:red' align='center'>Registration Details</h1>");
+		out.println("<center>");
+		out.println("<table border='1' bgcolor='pink'>");
+		out.println("<tr><td>User Name:"+uname+"</td></tr>");
+		out.println("<tr><td>User Password:"+upwd+"</td></tr>");           //displaying all details
+		out.println("<tr><td>User Designation:"+udes+"</td></tr>");
+		out.println("<tr><td>User Qualification:"+uqual+"</td></tr>");
+		out.println("<tr><td>User Mobile:"+uemail+"</td></tr>");
+		out.println("<tr><td>User Email:"+umobile+"</td></tr>");
+		out.println("</table></center></body></html>");
+	}
+}
+--------------------------------------------------------------------------------------------
