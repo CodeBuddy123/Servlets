@@ -1,0 +1,207 @@
+form1.html
+------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h2 style="color:red;" align="center">Ashish Software Solutions</h2>
+<h3 style="color:blue;" align="center">User Registration Page 1</h3>
+<form action="./first" method="post">
+<center>
+<table>
+<tr>
+	<td>User Name</td>
+	<td><input type="text" name="uname"></td>
+</tr>
+<tr>
+	<td>User Password</td>
+	<td><input type="password" name="upwd"></td>
+</tr>
+<tr>
+	<td><input type="submit" value="Next"></td>
+</tr>
+</table>
+</center>
+</form>
+</body>
+</html>
+---------------------------------------------------------------------------------------------------------
+form2.html
+------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h2 style="color:red;" align="center">Ashish Software Solutions</h2>
+<h3 style="color:blue;" align="center">User Registration Page 2</h3>
+<form action="./second" method="post">
+<center>
+<table>
+<tr>
+	<td>User Qualifcation</td>
+	<td><input type="text" name="uqual"></td>
+</tr>
+<tr>
+	<td>User Designation</td>
+	<td><input type="text" name="udes"></td>
+</tr>
+<tr>
+	<td><input type="submit" value="Next"></td>
+</tr>
+</table>
+</center>
+</form>
+</body>
+</html>
+-----------------------------------------------------------------------------------------------------------
+form3.html
+----------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h2 style="color:red;" align="center">Ashish Software Solutions</h2>
+<h3 style="color:blue;" align="center">User Registration Page 3</h3>
+<form action="./display" method="post">
+<center>
+<table>
+<tr>
+	<td>User Email</td>
+	<td><input type="text" name="uemail"></td>
+</tr>
+<tr>
+	<td>User Mobile</td>
+	<td><input type="text" name="umobile"></td>
+</tr>
+<tr>
+	<td><input type="submit" value="Display"></td>
+</tr>
+</table>
+</center>
+</form>
+</body>
+</html>
+--------------------------------------------------------------------------------------------------------
+FirstServlet.java
+-----------------------
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/first")
+public class FirstServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String uname=request.getParameter("uname");
+		String upwd=request.getParameter("upwd");   //getting form data
+		
+		Cookie c1=new Cookie("uname",uname);       //creating Cookie object for every request parameter
+		Cookie c2=new Cookie("upwd",upwd);
+		
+		response.addCookie(c1);
+		response.addCookie(c2);                    //adding cookie to response object
+		
+		RequestDispatcher rd=request.getRequestDispatcher("form2.html");
+		rd.forward(request, response);             //forwarding the request to form2.html
+	}
+
+}
+---------------------------------------------------------------------------------------------------------
+SecondServlet.java
+---------------------------
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/second")
+public class SecondServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String uqual=request.getParameter("uqual");
+		String udes=request.getParameter("udes");   //getting form data
+		
+		Cookie c3=new Cookie("uqual",uqual);       //creating Cookie object for every request parameter
+		Cookie c4=new Cookie("udes",udes);
+		
+		response.addCookie(c3);
+		response.addCookie(c4);                    //adding cookie to response object
+		
+		RequestDispatcher rd=request.getRequestDispatcher("form3.html");
+		rd.forward(request, response);             //forwarding the request to form3.html
+	}
+
+}
+----------------------------------------------------------------------------------------------------------
+DisplayServlet.java
+--------------------------
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/display")
+public class DisplayServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String uemail=request.getParameter("uemail");     //getting present request data from form3.html
+		String umobile=request.getParameter("umobile");
+		
+		Cookie[] c=request.getCookies();
+		
+		String uname=c[0].getValue();
+		String upwd=c[1].getValue();      //getting past request data from cookies
+		String uqual=c[2].getValue();
+		String udes=c[3].getValue();
+		
+		response.setContentType("text/html");
+		PrintWriter out=response.getWriter(); //display data
+		out.println("<html><body>");
+		out.println("<h1 style='color:red' align='center'>Registration Details</h1>");
+		out.println("<center>");
+		out.println("<table border='1' bgcolor='pink'>");
+		out.println("<tr><td>User Name:"+uname+"</td></tr>");
+		out.println("<tr><td>User Password:"+upwd+"</td></tr>");           //displaying all details
+		out.println("<tr><td>User Designation:"+udes+"</td></tr>");
+		out.println("<tr><td>User Qualification:"+uqual+"</td></tr>");
+		out.println("<tr><td>User Mobile:"+uemail+"</td></tr>");
+		out.println("<tr><td>User Email:"+umobile+"</td></tr>");
+		out.println("</table></center></body></html>");
+	}
+
+}
+---------------------------------------------------------------------------------------------------------
