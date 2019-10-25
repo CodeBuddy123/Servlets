@@ -1,0 +1,180 @@
+Inside oracle database[before execution of program]
+--------------------------------------------------------------------
+create table account(ACCNO varchar2(10) primary key,ACCBAL number(10));
+insert into account values('abc123',25000);
+Give accno as abc123 while checking o/p
+------------------------------------------------------------------
+depositform.html
+--------------------------
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<body>
+<h2 style="color:red;" align="center">Ashish Banking Services</h2>
+<h3 style="color:blue;" align="center">Deposit Form</h3>
+<form action="./first" method="post">
+<center>
+<table>
+<tr>
+	<td>Account No</td>
+	<td><input type="text" name="accNo"></td>
+</tr>
+<tr>
+	<td>Account Name</td>
+	<td><input type="text" name="accName"></td>
+</tr>
+<tr>
+	<td><input type="submit" value="Next"></td>
+</tr>
+</table>
+</center>
+</form>
+</body>
+</html>
+--------------------------------------------------------------------------------------------------------
+FirstServlet.java
+-----------------------
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet("/first")
+public class FirstServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("deprecation")
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String accNo=request.getParameter("accNo");
+		String accName=request.getParameter("accName");  //getting form data
+		
+		HttpSession hs=request.getSession();            //getting HttpSession object
+		hs.setAttribute("accNo",accNo);
+		hs.setAttribute("accName",accName);            //Storing data into HttpSession object
+		
+		response.setContentType("text/html");
+		PrintWriter out=response.getWriter();
+		
+		out.println("<html><body>");                   //preparing dynamic form
+		out.println("<h2 style='color:red' align='center'>Ashish Banking Services</h2>");
+		out.println("<h2 style='color:blue' align='center'>Deposit Form[Cont..]</h2>");
+		out.println("<form method='POST' action='"+response.encodeUrl("./second")+"'>");
+		out.println("<center><table>");
+		out.println("<tr><td>Account Type</td><td><input type='text' name='accType'/></td></tr>");
+		out.println("<tr><td>Account Branch</td><td><input type='text' name='accBranch'/></td></tr>");
+		out.println("<tr><td><input type='submit' value='NEXT'/></td></tr>");
+		out.println("</table></center></form></body></html>");
+		
+	}
+
+}
+---------------------------------------------------------------------------------------------------------
+SecondServlet.java
+----------------------------
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet("/second")
+public class SecondServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("deprecation")
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String accType=request.getParameter("accType");
+		String accBranch=request.getParameter("accBranch");  //getting form data
+		
+		HttpSession hs=request.getSession();
+		hs.setAttribute("accType",accType);
+		hs.setAttribute("accBranch",accBranch); //storing form data into HttpSession object
+		
+		response.setContentType("text/html");
+		PrintWriter out=response.getWriter();
+		
+		out.println("<html><body>");   //preparing dynamic form
+		out.println("<h2 style='color:red' align='center'>Ashish Banking Services</h2>");
+		out.println("<h2 style='color:blue' align='center'>Deposit Form[Cont..]</h2>");
+		out.println("<form method='POST' action='"+response.encodeUrl("./deposit")+"'>");//adding SessionID in response header
+		out.println("<center><table>");
+		out.println("<tr><td>Deposit Amount</td><td><input type='text' name='depAmt'/></td></tr>");
+		out.println("<tr><td>Depositor Name</td><td><input type='text' name='depName'/></td></tr>");
+		out.println("<tr><td><input type='submit' value='NEXT'/></td></tr>");
+		out.println("</table></center></form></body></html>");
+	}
+
+}
+--------------------------------------------------------------------------------------------------------
+TransactionService.java
+-----------------------------------
+package com.ashsoft.service;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class TransactionService {
+    
+	 Connection con=null;
+	 Statement st=null;
+	 ResultSet rs=null;
+     public TransactionService() {
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","ashish");
+			st=con.createStatement();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+    public String deposit(String accNo,int depAmt)
+    {
+    	String status="";
+    	try {
+			int rowCount=st.executeUpdate("update account set ACCBAL=ACCBAL+'"+depAmt+"' where ACCNO='"+accNo+"'");
+			if(rowCount==1)
+			{
+				status="success";
+			}
+			else
+			{
+				status="failure";
+			}
+		} catch (Exception e) {
+			status="failure";
+			e.printStackTrace();
+		}
+    	return status;
+    }
+    
+    public int getTotalBalance(String accNo)
+    {
+    	int totalBalance=0;
+    	try {
+			rs=st.executeQuery("select * from account where ACCNO='"+accNo+"'");
+			rs.next(); //moves cursor to first record
+			totalBalance=rs.getInt("ACCBAL");  //getting balance from RS
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return totalBalance; //returns balance to the servlet
+    }
+}
