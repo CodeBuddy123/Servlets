@@ -1,0 +1,160 @@
+loginform.html
+----------------------
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h2 style="color: green;" align="center">Ashish Software Solutions</h2>
+        <h3 style="color: blue;" align="center">Login Page</h3>
+        <form action="./test" method="POST">
+            <center>
+                <table>
+                    <tr>
+                        <td>User Name</td>
+                        <td><input type="text" name="uname"></td>
+                    </tr>
+                    <tr>
+                        <td>User Password</td>
+                        <td><input type="password" name="upwd"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Login"></td>
+                    </tr>
+                </table>
+            </center>
+        </form>
+    </body>
+</html>
+--------------------------------------------------------------------------------------------------------
+web.xml
+-------------
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>com.ashsoft.filters.AuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/test</url-pattern>
+    </filter-mapping>
+    <servlet>
+        <servlet-name>TestServlet</servlet-name>
+        <servlet-class>com.ashsoft.servlets.TestServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TestServlet</servlet-name>
+        <url-pattern>/test</url-pattern>
+    </servlet-mapping>
+</web-app>
+-----------------------------------------------------------------------------------------------------------
+TestServlet.java
+-----------------------
+
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class TestServlet extends HttpServlet {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+           
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet TestServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1 align='center' style='color:green'>Login Success</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+
+   
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+   
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+}
+----------------------------------------------------------------------------------------------------------
+AuthenticationFilter.java
+-----------------------------------
+
+package com.ashsoft.filters;
+
+import java.io.IOException;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+
+public class AuthenticationFilter implements Filter {
+
+    public void doFilter(ServletRequest request, ServletResponse response,
+            FilterChain chain) throws IOException, ServletException {
+        
+        HttpServletRequest hreq=(HttpServletRequest)request;   //Wrapping request and response objects
+        HttpServletResponse hres=(HttpServletResponse)response;
+        
+        RequestDispatcher requestDispatcher=null;
+        if(hreq.getMethod().equalsIgnoreCase("GET"))      //forwarding the request to loginform.html if request type is "GET"
+        {
+            requestDispatcher=request.getRequestDispatcher("loginform.html");
+            requestDispatcher.forward(hreq, hres);
+        }
+        else
+        {
+            String uname=request.getParameter("uname");
+            String upwd=request.getParameter("upwd");
+            
+            if(uname.equalsIgnoreCase("ashish") && upwd.equals("ashish"))
+            {
+                chain.doFilter(hreq, hres); //forwarding the request to servlet if credentials are correct
+            }
+            else
+            {
+                requestDispatcher=request.getRequestDispatcher("loginform.html");
+                requestDispatcher.forward(hreq, hres);  //forwarding the request to form,on failure
+            }
+        }
+       
+    }
+
+
+    public void destroy() {        
+    }
+
+    public void init(FilterConfig filterConfig) {        
+     
+    }
+    
+}
+
