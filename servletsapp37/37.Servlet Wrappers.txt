@@ -1,0 +1,196 @@
+regform.html
+--------------------
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h2 style="color:red;" align="center">Ashish Software Solutions</h2>
+        <h3 style="color:blue;" align="center">Registration Form</h3>
+        <form action="./reg" method="POST">
+            <center>
+                <table bgcolor="lightblue">
+                    <tr>
+                        <td>User Name</td>
+                        <td><input type="text" name="uname"/></td>
+                    </tr>
+                    <tr>
+                        <td>User Password</td>
+                        <td><input type="password" name="upwd"/></td>
+                    </tr>
+                    <tr>
+                        <td>User Email</td>
+                        <td><input type="text" name="uemail"/>@dss.com</td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Register"/></td>     
+                    </tr>
+                </table>
+            </center>
+        </form>
+    </body>
+</html>
+-------------------------------------------------------------------------------------------
+RegistrationServlet.java
+-----------------------------------
+
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@WebServlet(name = "RegistrationServlet", urlPatterns = {"/reg"})
+public class RegistrationServlet extends HttpServlet {
+
+ 
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+            
+            response.setContentType("img/jpg"); //overridden in myresponse
+            PrintWriter out=response.getWriter();
+            
+            String uname=request.getParameter("uname");
+            String upwd=request.getParameter("upwd");      //getting form data
+            String uemail=request.getParameter("uemail");
+            
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");                         //displaying data
+            out.println("<head>");
+            out.println("<title>Servlet RegistrationServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h2 style='color:red' align='center'>Ashish Software Solutions</h1>");
+            out.println("<h3 style='color:blue' align='center'>Registration Details</h1>");
+            out.println("<center>");
+            out.println("<table border='1' bgcolor='pink'>");
+            out.println("<tr><td>User Name</td><td>"+uname+"</td></tr>");
+            out.println("<tr><td>User Password</td><td>"+upwd+"</td></tr>");
+            out.println("<tr><td>User Email</td><td>"+uemail+"</td></tr>");
+            out.println("</table>");
+            out.println("</center>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    
+
+  
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+   
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }   
+
+}
+------------------------------------------------------------------------------------------
+MyRequest.java
+------------------------
+
+package com.ashsoft.custom;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+
+public class MyRequest extends HttpServletRequestWrapper {
+    HttpServletRequest request;
+    public MyRequest(HttpServletRequest request) {
+        super(request);
+        this.request=request;
+    }
+
+    @Override
+    public String getParameter(String name) {
+        String val=request.getParameter(name);
+        if(name.equals("uemail"))
+        {
+            if(!val.endsWith("@dss.com"))
+            {                               //customizing request object
+                val=val+"@dss.com";
+            }
+        }
+        return val; 
+    }
+    
+}
+--------------------------------------------------------------------------------------------
+MyResponse.java
+--------------------------
+
+package com.ashsoft.custom;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
+
+public class MyResponse  extends HttpServletResponseWrapper{
+    HttpServletResponse response;
+
+    public MyResponse(HttpServletResponse response) {
+        super(response);
+        this.response=response;
+    }
+
+    @Override
+    public void setContentType(String type) {
+        response.setContentType("text/html"); //customizing response object
+    }
+    
+}
+------------------------------------------------------------------------------------------
+MyFilter.java
+---------------------
+
+package com.ashsoft.filters;
+
+import com.ashsoft.custom.MyRequest;
+import com.ashsoft.custom.MyResponse;
+
+import java.io.IOException;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@WebFilter(filterName = "MyFilter", urlPatterns = {"/reg"})
+public class MyFilter implements Filter {
+    
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response,
+            FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletRequest hreq=(HttpServletRequest) request;
+        HttpServletResponse hres=(HttpServletResponse) response;
+        MyRequest mreq=new MyRequest(hreq);
+        MyResponse mres=new MyResponse(hres);
+        chain.doFilter(mreq, mres);      //passing our own request and response objects to servlet     
+    }    
+ 
+    @Override
+    public void destroy() {        
+    }
+
+    @Override
+    public void init(FilterConfig filterConfig) {        
+       
+        }
+}
