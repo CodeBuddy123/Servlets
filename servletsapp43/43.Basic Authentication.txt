@@ -1,0 +1,62 @@
+
+Note:- Add this tag to configure security in tomcat-users.xml
+<user password="ash" roles="ashrole" username="ash"/>
+--------------------------------------------------------------------------------------
+web.xml
+------------
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>servletsapp43</display-name>
+  <servlet>
+    <servlet-name>testServlet</servlet-name>
+    <servlet-class>com.ashsoft.servlets.TestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>testServlet</servlet-name>
+    <url-pattern>/test</url-pattern>
+  </servlet-mapping>
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>checkedServlet</web-resource-name>
+  		<url-pattern>/test</url-pattern>
+  		<http-method>GET</http-method>
+  	</web-resource-collection>
+  	<auth-constraint>
+  		<role-name>ashrole</role-name>
+  	</auth-constraint>
+  </security-constraint>
+  <login-config>
+  	 <auth-method>BASIC</auth-method>
+  </login-config>
+  <security-role>
+  	<role-name>ashrole</role-name>
+  </security-role>
+</web-app>
+-----------------------------------------------------------------------------------------------------
+TestServlet.java
+----------------------
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class TestServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	   
+		response.setContentType("text/html");
+		PrintWriter out=response.getWriter();
+		out.println("<html><body>");
+		out.println("<h1 style='color:green' align='center'>Security Test</h1>");
+		out.println("</body></html>");
+	}
+
+}
+-----------------------------------------------------------------------------------------------------
