@@ -1,0 +1,111 @@
+Add this tag in tomcat-users.xml in IDE Eclipse
+
+
+login.jsp
+------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="j_security_check">
+<table align='center'>
+<tr>
+	<td>User Name</td>
+	<td><input type="text" name="j_username"></td>
+</tr>
+<tr>
+	<td>User Password</td>
+	<td><input type="password" name="j_password"></td>
+</tr>
+<tr>
+	<td><input type="submit" value="Login"/></td>
+</tr>
+</table>
+</form>
+</body>
+</html>
+----------------------------------------------------------------------------------------------------
+error.jsp
+------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1 align='center' style="color:red">
+Invalid Credentials, You arent allowed to Access.
+</h1>
+</body>
+</html>
+---------------------------------------------------------------------------------------------------
+web.xml
+-------------
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>servletsapp44</display-name>
+  <servlet>
+    <description></description>
+    <display-name>TestServlet</display-name>
+    <servlet-name>TestServlet</servlet-name>
+    <servlet-class>com.ashsoft.servlets.TestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TestServlet</servlet-name>
+    <url-pattern>/test</url-pattern>
+  </servlet-mapping>
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>checkedServlet</web-resource-name>
+  		<url-pattern>/test</url-pattern>
+  		<http-method>GET</http-method> 		
+  	</web-resource-collection>
+  	<auth-constraint>
+  		<role-name>ashirole</role-name>
+  	</auth-constraint>
+  </security-constraint>
+  <login-config>
+  	<auth-method>FORM</auth-method>
+  	<form-login-config>
+  		<form-login-page>/login.jsp</form-login-page>
+  		<form-error-page>/error.jsp</form-error-page>
+  	</form-login-config>
+  </login-config>
+  <security-role>
+  	<role-name>ashirole</role-name>
+  </security-role>
+</web-app>
+----------------------------------------------------------------------------------------------------
+TestServlet.java
+----------------------
+package com.ashsoft.servlets;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class TestServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		PrintWriter out=response.getWriter();
+		out.println("<html><body>");
+		out.println("<h1 style='color:blue' align='center'>Security Check</h1>");
+		out.println("</body></html>");
+	}
+
+}
